@@ -1,0 +1,5 @@
+name: Form Page
+description: 'A simple form which takes in basic details of the user.'
+type: module
+package: Custom
+core: 8.x

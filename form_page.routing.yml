@@ -1,0 +1,7 @@
+form_page:
+  path: '/form-page'
+  defaults:
+    _title: 'Form Page'
+    _form: 'Drupal\form_page\Form\FormPage'
+  requirements:
+    _permission: 'access content'
