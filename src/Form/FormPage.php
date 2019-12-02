@@ -93,7 +93,7 @@ class FormPage extends FormBase {
     }
 
     if ($age > 150) {
-      $form_state->setErrorByName('age', $this->t('Hmmm...according to various calculations, you aren\'t even born yet!'));
+      $form_state->setErrorByName('age', $this->t('Invalid age detected.'));
     }
 
     // Checks if age and birth date correspond.
