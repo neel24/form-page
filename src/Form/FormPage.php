@@ -1,4 +1,5 @@
 <?php
+
 namespace Drupal\form_page\Form;
 
 use Drupal\Core\Form\FormBase;
@@ -72,34 +73,34 @@ class FormPage extends FormBase {
 
     $name = $form_state->getValue('name');
 
-    //Checks if string length in the name is valid.
-     if (strlen($form_state->getValue('name')) < 2) {
+    // Checks if string length in the name is valid.
+    if (strlen($form_state->getValue('name')) < 2) {
       $form_state->setErrorByName('name', $this->t('Please enter a valid name.'));
     }
 
     // Checks if name input contains any invalid characters.
-     if (!ctype_alpha($name)) {
-     $form_state->setErrorByName('name', $this->t('The name %nameinput contains invalid characters.', array(
-       '%nameinput' => $name
-     )));
+    if (!ctype_alpha($name)) {
+      $form_state->setErrorByName('name', $this->t('The name %nameinput contains invalid characters.', [
+        '%nameinput' => $name,
+      ]));
     }
 
     $age = $form_state->getValue('age');
 
     // Checks if age is valid.
     if ($age < 0) {
-      $form_state->setErrorByName('age', $this->t('Hmmm...according to my calculations, you aren\'t even born yet! '));
+      $form_state->setErrorByName('age', $this->t('Hmmm...according to various calculations, you aren\'t even born yet!'));
     }
 
     if ($age > 150) {
-      $form_state->setErrorByName('age', $this->t('Invalid age detected.'));
+      $form_state->setErrorByName('age', $this->t('Hmmm...according to various calculations, you aren\'t even born yet!'));
     }
 
     // Checks if age and birth date correspond.
     $birthday = $form_state->getValue('birthday');
 
-    $AgeInput = date("Y");
-    if (($AgeInput - $birthday) !=$age) {
+    $ageInput = date("Y");
+    if (($ageInput - $birthday) != $age) {
       $form_state->setErrorByName('birthday', $this->t('Your birth date and age do not correspond.'));
     }
 
@@ -119,4 +120,5 @@ class FormPage extends FormBase {
       '@age' => $form_state->getValue('age'),
     ]));
   }
+
 }
