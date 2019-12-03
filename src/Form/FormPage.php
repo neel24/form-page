@@ -113,7 +113,7 @@ class FormPage extends FormBase {
 
     // Displays the values input by the user.
     $messenger = \Drupal::messenger();
-    $messenger->addMessage($this->t('Your name is @name and you are @gender. You were born on @birthday and are @age years old.', [
+    $messenger->addMessage($this->t('You are @name, age @age and were born on @birthday. As gender you selected <em>@gender</em>.', [
       '@name' => $form_state->getValue('name'),
       '@birthday' => $form_state->getValue('birthday'),
       '@gender' => $form_state->getValue('gender'),
