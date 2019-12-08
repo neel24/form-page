@@ -4,11 +4,47 @@ namespace Drupal\form_page\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Messenger\MessengerInterface;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Implements the form.
  */
 class FormPage extends FormBase {
+
+  /**
+   * The Messenger service.
+   *
+   * @var \Drupal\Core\Messenger\MessengerInterface
+   */
+  protected $messenger;
+
+
+  /**
+   * The log drupal.
+   *
+   * @var \Drupal\Core\Logger\LoggerChannelFactoryInterface
+   */
+  protected $logger;
+
+  /**
+   * Class constructor.
+   */
+  public function __construct(MessengerInterface $messenger, LoggerChannelFactoryInterface $logger_factory) {
+    $this->messenger = $messenger;
+    $this->logger = $logger_factory;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('messenger'),
+      $container->get('logger.factory')
+    );
+  }
 
   /**
    * {@inheritdoc}
@@ -79,7 +115,7 @@ class FormPage extends FormBase {
     }
 
     // Checks if name input contains any invalid characters.
-    if (!ctype_alpha($name)) {
+    if (!ctype_print($name)) {
       $form_state->setErrorByName('name', $this->t('The name %nameinput contains invalid characters.', [
         '%nameinput' => $name,
       ]));
@@ -92,7 +128,7 @@ class FormPage extends FormBase {
       $form_state->setErrorByName('age', $this->t('Hmmm...according to various calculations, you aren\'t even born yet!'));
     }
 
-    if ($age > 150) {
+    if ($age > 120) {
       $form_state->setErrorByName('age', $this->t('Invalid age detected.'));
     }
 
@@ -111,14 +147,18 @@ class FormPage extends FormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
 
-    // Displays the values input by the user.
-    $messenger = \Drupal::messenger();
-    $messenger->addMessage($this->t('You are @name, age @age and were born on @birthday. As gender you selected <em>@gender</em>.', [
+    // Displays the information input by the user.
+    $this->messenger->addMessage($this->t('You are @name, age @age and were born on @birthday. As gender you selected <em>@gender</em>.', [
       '@name' => $form_state->getValue('name'),
       '@birthday' => $form_state->getValue('birthday'),
       '@gender' => $form_state->getValue('gender'),
       '@age' => $form_state->getValue('age'),
     ]));
+
+    $this->logger->get('form_page')->info('New submission by @user.', [
+      '@user' => $form_state->getValue('name'),
+    ]);
   }
 
 }
+
