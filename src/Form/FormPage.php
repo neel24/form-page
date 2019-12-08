@@ -114,7 +114,7 @@ class FormPage extends FormBase {
     }
 
     // Checks if name input contains any invalid characters.
-    if (!ctype_print($name)) {
+    if (!ctype_alpha($name)) {
       $form_state->setErrorByName('name', $this->t('The name %nameinput contains invalid characters.', [
         '%nameinput' => $name,
       ]));
