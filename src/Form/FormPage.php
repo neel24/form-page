@@ -20,7 +20,6 @@ class FormPage extends FormBase {
    */
   protected $messenger;
 
-
   /**
    * The log drupal.
    *
