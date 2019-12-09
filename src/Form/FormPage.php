@@ -154,7 +154,7 @@ class FormPage extends FormBase {
       '@age' => $form_state->getValue('age'),
     ]));
 
-    \Drupal::logger('form_page')->info($this->t('New submission by @user', [
+    $this->logger->get('form_page')->info($this->t('New submission by @user', [
       '@user' => $form_state->getValue('name'),
     ]));
   }
