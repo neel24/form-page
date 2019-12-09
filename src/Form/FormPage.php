@@ -5,8 +5,8 @@ namespace Drupal\form_page\Form;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
-use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 
 /**
  * Implements the form.
@@ -14,18 +14,18 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class FormPage extends FormBase {
 
   /**
-   * The Messenger service.
-   *
-   * @var \Drupal\Core\Messenger\MessengerInterface
-   */
-  protected $messenger;
-
-  /**
    * The log drupal.
    *
    * @var \Drupal\Core\Logger\LoggerChannelFactoryInterface
    */
   protected $logger;
+
+  /**
+   * The Messenger service.
+   *
+   * @var \Drupal\Core\Messenger\MessengerInterface
+   */
+  protected $messenger;
 
   /**
    * Class constructor.
@@ -114,7 +114,7 @@ class FormPage extends FormBase {
     }
 
     // Checks if name input contains any invalid characters.
-    if (!ctype_alpha($name)) {
+    if (!ctype_print($name)) {
       $form_state->setErrorByName('name', $this->t('The name %nameinput contains invalid characters.', [
         '%nameinput' => $name,
       ]));
@@ -154,9 +154,9 @@ class FormPage extends FormBase {
       '@age' => $form_state->getValue('age'),
     ]));
 
-    $this->logger->get('form_page')->info('New submission by @user.', [
+    \Drupal::logger('form_page')->info($this->t('New submission by @user', [
       '@user' => $form_state->getValue('name'),
-    ]);
+    ]));
   }
 
 }
