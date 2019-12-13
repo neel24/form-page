@@ -5,8 +5,8 @@ namespace Drupal\form_page\Form;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Implements the form.
@@ -14,18 +14,18 @@ use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 class FormPage extends FormBase {
 
   /**
-   * The log drupal.
-   *
-   * @var \Drupal\Core\Logger\LoggerChannelFactoryInterface
-   */
-  protected $logger;
-
-  /**
    * The Messenger service.
    *
    * @var \Drupal\Core\Messenger\MessengerInterface
    */
   protected $messenger;
+
+  /**
+   * The log drupal.
+   *
+   * @var \Drupal\Core\Logger\LoggerChannelFactoryInterface
+   */
+  protected $logger;
 
   /**
    * Class constructor.
@@ -114,7 +114,7 @@ class FormPage extends FormBase {
     }
 
     // Checks if name input contains any invalid characters.
-    if (!ctype_print($name)) {
+    if (!ctype_alpha($name)) {
       $form_state->setErrorByName('name', $this->t('The name %nameinput contains invalid characters.', [
         '%nameinput' => $name,
       ]));
