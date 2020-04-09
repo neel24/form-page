@@ -9,5 +9,5 @@ This is a simple Drupal 8 module which creates a simple form to take in basic de
 
 ## Usage
 
-1. Visit example.com/form-page to view/use the form.
+1. Visit example.com/form-page to view and use the form.
 2. Once details have been submit, a log of _info_ type will be created at example.com/admin/reports/dblog.
