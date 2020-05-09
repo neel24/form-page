@@ -1,6 +1,6 @@
 # Form Page
 
-This is a simple Drupal 8 module which creates a simple form to take in basic details of the user.
+This is a Drupal 8 module which provides a form for taking in basic details of the user.
 
 ## Installation Instructions
 
